@@ -1,0 +1,3 @@
+# My neovimrc
+
+Nothing special. 

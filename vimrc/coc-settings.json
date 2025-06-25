@@ -1,0 +1,11 @@
+{
+	"coc.preferences.formatOnSave": true,
+	"suggest.noselect": true,
+	"prettier.trailingComma": "none",
+	"prettier.singleQuote": true,
+	"prettier.useTabs": true,
+	"python.pythonPath": "./venv/bin/python",
+	"inlayHint.enable": false,
+	"tsserver.log": "verbose",
+	"tsserver.trace.server": "verbose"
+}
