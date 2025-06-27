@@ -109,9 +109,13 @@ return {
                 client.server_capabilities.documentFormattingProvider = true
             end,
         }
+        lspconfig.clangd.setup {
+            cmd = { "clangd", "--compile-commands-dir=." },
+            root_dir = require('lspconfig.util').root_pattern("compile_commands.json", "platformio.ini", ".git"),
+        }
         require('mason').setup()
         require('mason-lspconfig').setup({
-            ensure_installed = { 'lua_ls', 'gopls', 'ts_ls', 'pyright' },
+            ensure_installed = { 'lua_ls', 'gopls', 'ts_ls', 'pyright', 'clangd' },
         })
 
         -- 6. Completion configuration
