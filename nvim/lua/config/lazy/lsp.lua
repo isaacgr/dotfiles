@@ -51,6 +51,7 @@ return {
         if not table.unpack then
             table.unpack = unpack
         end
+        capabilities.textDocument.completion.completionItem.snippetSupport = true
 
         -- 4. Show LSP progress with fidget
         require('fidget').setup({})
@@ -113,9 +114,20 @@ return {
             cmd = { "clangd", "--compile-commands-dir=." },
             root_dir = require('lspconfig.util').root_pattern("compile_commands.json", "platformio.ini", ".git"),
         }
+        lspconfig.html.setup {
+            capabilities = capabilities,
+
+        }
         require('mason').setup()
         require('mason-lspconfig').setup({
-            ensure_installed = { 'lua_ls', 'gopls', 'ts_ls', 'pyright', 'clangd' },
+            ensure_installed = {
+                'lua_ls',
+                'gopls',
+                'ts_ls',
+                'pyright',
+                'clangd',
+                'html',
+            },
         })
 
         -- 6. Completion configuration
