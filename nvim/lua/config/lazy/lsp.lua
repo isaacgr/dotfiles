@@ -35,8 +35,18 @@ return {
         -- 2. Setup formatting via conform
         require("conform").setup({
             formatters_by_ft = {
-                python = { 'autopep8' }
+                python = { 'autopep8' },
+                html = { 'prettier' }
             },
+            formatters = {
+                prettier = {
+                    prepend_args = {
+                        '--tab-width', '4',
+                        '--printWidth', '80',
+                        '--singleAttributePerLine', 'true'
+                    }
+                }
+            }
         })
 
         -- 3. Configure nvim-cmp and merge capabilities with LSP defaults
@@ -116,6 +126,10 @@ return {
         }
         lspconfig.html.setup {
             capabilities = capabilities,
+            on_attach = function(client, _)
+                -- turn off the server’s documentFormattingProvider
+                client.server_capabilities.documentFormattingProvider = false
+            end,
 
         }
         require('mason').setup()
