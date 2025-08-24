@@ -14,6 +14,14 @@ local root_files = {
     'package.json'
 }
 
+local function log_cmd(client)
+    if client and client.config and client.config.cmd then
+        vim.notify("clangd cmd: " .. table.concat(client.config.cmd, " "), vim.log.levels.INFO)
+    else
+        vim.notify("clangd cmd: <none>", vim.log.levels.WARN)
+    end
+end
+
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -36,7 +44,8 @@ return {
         require("conform").setup({
             formatters_by_ft = {
                 python = { 'autopep8' },
-                html = { 'prettier' }
+                html = { 'prettier' },
+                css = { 'prettier' }
             },
             formatters = {
                 prettier = {
@@ -121,8 +130,15 @@ return {
             end,
         }
         lspconfig.clangd.setup {
-            cmd = { "clangd", "--compile-commands-dir=." },
+            cmd = {
+                "clangd",
+                "--compile-commands-dir=.",
+                "--query-driver=/home/isaac/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-*"
+            },
             root_dir = require('lspconfig.util').root_pattern("compile_commands.json", "platformio.ini", ".git"),
+            --on_init = function(client, _)
+            --    log_cmd(client) -- <- see what actually got used
+            --end,
         }
         lspconfig.html.setup {
             capabilities = capabilities,
