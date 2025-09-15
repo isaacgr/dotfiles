@@ -133,7 +133,8 @@ return {
             cmd = {
                 "clangd",
                 "--compile-commands-dir=.",
-                "--query-driver=/home/isaac/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-*"
+                "--query-driver=/home/isaac/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-*",
+                "--fallback-style=webkit"
             },
             root_dir = require('lspconfig.util').root_pattern("compile_commands.json", "platformio.ini", ".git"),
             --on_init = function(client, _)
@@ -148,6 +149,17 @@ return {
             end,
 
         }
+        require('lspconfig').cssls.setup {
+            cmd = { "vscode-css-language-server", "--stdio" },
+            filetypes = { "css", "scss", "less" },
+            root_dir = require('lspconfig.util').root_pattern("package.json", ".git"),
+            settings = {
+                css = { validate = true },
+                scss = { validate = true },
+                less = { validate = true },
+            },
+        }
+
         require('mason').setup()
         require('mason-lspconfig').setup({
             ensure_installed = {
@@ -157,6 +169,7 @@ return {
                 'pyright',
                 'clangd',
                 'html',
+                'cssls',
             },
         })
 
