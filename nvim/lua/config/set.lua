@@ -42,3 +42,17 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 
 vim.opt.mouse = ""
+
+vim.g.clipboard = {
+  name = "WslClipboard",
+  copy = {
+    ["+"] = "clip.exe",
+    ["*"] = "clip.exe",
+  },
+  paste = {
+    ["+"] = [[powershell.exe -NoLogo -NoProfile -Command Get-Clipboard]],
+    ["*"] = [[powershell.exe -NoLogo -NoProfile -Command Get-Clipboard]],
+  },
+  cache_enabled = 0,
+}
+

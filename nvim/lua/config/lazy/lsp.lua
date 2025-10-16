@@ -36,7 +36,8 @@ return {
         require("conform").setup({
             formatters_by_ft = {
                 python = { 'autopep8' },
-                html = { 'prettier' }
+                html = { 'prettier' },
+                css = { 'prettier' }
             },
             formatters = {
                 prettier = {
@@ -67,11 +68,12 @@ return {
         require('fidget').setup({})
 
         -- 5. Bootstrap mason and mason-lspconfig
-        local lspconfig = require('lspconfig')
-        local util      = lspconfig.util
+        local lspconfig       = vim.lsp.config
+        local util            = require('lspconfig.util')
 
         -- Custom settings for Lua language server:
-        lspconfig.lua_ls.setup {
+        -- Custom settings for Lua language server (new API)
+        vim.lsp.config.lua_ls = {
             root_dir     = util.root_pattern(table.unpack(root_files)),
             capabilities = capabilities,
             settings     = {
@@ -86,7 +88,9 @@ return {
                 },
             },
         }
-        lspconfig.pyright.setup {
+        vim.lsp.enable("lua_ls")
+
+        vim.lsp.config.pyright = {
             capabilities = capabilities,
             settings = {
                 python = {
@@ -99,7 +103,9 @@ return {
                 }
             }
         }
-        lspconfig.ts_ls.setup {
+        vim.lsp.enable("pyright")
+
+        vim.lsp.config.ts_ls = {
             capabilities = capabilities,
             on_attach = function(client, bufnr)
                 vim.api.nvim_buf_create_user_command(bufnr, 'LspTypescriptSourceAction', function()
@@ -120,18 +126,22 @@ return {
                 client.server_capabilities.documentFormattingProvider = true
             end,
         }
-        lspconfig.clangd.setup {
+        vim.lsp.enable("ts_ls")
+
+        vim.lsp.config.clangd = {
             cmd = { "clangd", "--compile-commands-dir=." },
-            root_dir = require('lspconfig.util').root_pattern("compile_commands.json", "platformio.ini", ".git"),
+            root_dir = util.root_pattern("compile_commands.json", "platformio.ini", ".git"),
         }
-        lspconfig.html.setup {
+        vim.lsp.enable("clangd")
+
+        vim.lsp.config.html = {
             capabilities = capabilities,
             on_attach = function(client, _)
-                -- turn off the server’s documentFormattingProvider
                 client.server_capabilities.documentFormattingProvider = false
             end,
-
         }
+        vim.lsp.enable("html")
+
         require('mason').setup()
         require('mason-lspconfig').setup({
             ensure_installed = {
