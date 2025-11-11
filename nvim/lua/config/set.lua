@@ -43,16 +43,24 @@ vim.opt.colorcolumn = "80"
 
 vim.opt.mouse = ""
 
-vim.g.clipboard = {
-  name = "WslClipboard",
-  copy = {
-    ["+"] = "clip.exe",
-    ["*"] = "clip.exe",
-  },
-  paste = {
-    ["+"] = [[powershell.exe -NoLogo -NoProfile -Command Get-Clipboard]],
-    ["*"] = [[powershell.exe -NoLogo -NoProfile -Command Get-Clipboard]],
-  },
-  cache_enabled = 0,
-}
+local in_wsl = function()
+  local ok, output = pcall(function()
+    return vim.fn.readfile("/proc/version")
+  end)
+  return ok and output[1] and output[1]:match("Microsoft") ~= nil
+end
 
+if in_wsl() then
+  vim.g.clipboard = {
+    name = "WslClipboard",
+    copy = {
+      ["+"] = "clip.exe",
+      ["*"] = "clip.exe",
+    },
+    paste = {
+      ["+"] = [[powershell.exe -NoLogo -NoProfile -Command Get-Clipboard]],
+      ["*"] = [[powershell.exe -NoLogo -NoProfile -Command Get-Clipboard]],
+    },
+    cache_enabled = 0,
+  }
+end

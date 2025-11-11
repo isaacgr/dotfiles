@@ -37,7 +37,8 @@ return {
             formatters_by_ft = {
                 python = { 'autopep8' },
                 html = { 'prettier' },
-                css = { 'prettier' }
+                css = { 'prettier' },
+                json = { 'prettier' },
             },
             formatters = {
                 prettier = {
