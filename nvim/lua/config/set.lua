@@ -10,7 +10,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 
-vim.opt.wrap = true
+vim.opt.wrap = false
 
 -- Disable swap file creation (for fewer temporary files)
 vim.opt.swapfile = false
