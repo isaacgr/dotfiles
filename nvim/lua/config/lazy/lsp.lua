@@ -38,13 +38,14 @@ return {
                 python = { 'autopep8' },
                 html = { 'prettier' },
                 css = { 'prettier' },
+                scss = { 'prettier' },
                 json = { 'prettier' }
             },
             formatters = {
                 prettier = {
                     prepend_args = {
                         '--tab-width', '4',
-                        '--printWidth', '80',
+                        '--print-width', '80',
                         '--singleAttributePerLine', 'true'
                     }
                 }
@@ -64,6 +65,22 @@ return {
             table.unpack = unpack
         end
         capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+        require('mason').setup()
+        require('mason-lspconfig').setup({
+            ensure_installed = {
+                'lua_ls',
+                'gopls',
+                'ts_ls',
+                'pyright',
+                'clangd',
+                'html',
+                'cssls',
+                'tailwindcss'
+            },
+            automatic_installation = true,
+        })
+
 
         -- 4. Show LSP progress with fidget
         require('fidget').setup({})
@@ -142,18 +159,6 @@ return {
             end,
         }
         vim.lsp.enable("html")
-
-        require('mason').setup()
-        require('mason-lspconfig').setup({
-            ensure_installed = {
-                'lua_ls',
-                'gopls',
-                'ts_ls',
-                'pyright',
-                'clangd',
-                'html',
-            },
-        })
 
         -- 6. Completion configuration
         cmp.setup({
