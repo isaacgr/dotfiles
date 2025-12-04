@@ -8,4 +8,4 @@ vim.g.netrw_winsize = 251
 vim.g.splitjoin_python_brackets_on_separate_lines = 1
 vim.g.splitjoin_trailing_comma = 1
 
-ColorMyPencils("rose-pine-moon")
+ColorMyPencils("everforest")
