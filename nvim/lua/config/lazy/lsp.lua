@@ -147,8 +147,9 @@ return {
         vim.lsp.enable("ts_ls")
 
         vim.lsp.config.clangd = {
-            cmd = { "clangd", "--compile-commands-dir=." },
-            root_dir = util.root_pattern("compile_commands.json", "platformio.ini", ".git"),
+            capabilities = capabilities,
+            cmd = { "clangd" },
+            root_markers = { 'compile_commands.json', 'platformio.ini', '.git' },
         }
         vim.lsp.enable("clangd")
 
