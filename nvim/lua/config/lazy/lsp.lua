@@ -39,7 +39,9 @@ return {
                 html = { 'prettier' },
                 css = { 'prettier' },
                 scss = { 'prettier' },
-                json = { 'prettier' }
+                json = { 'prettier' },
+                cpp = { "clang-format" },
+                c = { "clang-format" },
             },
             formatters = {
                 prettier = {
@@ -48,6 +50,9 @@ return {
                         '--print-width', '80',
                         '--singleAttributePerLine', 'true'
                     }
+                },
+                clang_format = {
+                    prepend_args = { "-style=file" }
                 }
             }
         })
@@ -92,7 +97,7 @@ return {
         -- Custom settings for Lua language server:
         -- Custom settings for Lua language server (new API)
         vim.lsp.config.lua_ls = {
-            root_dir     = util.root_pattern(table.unpack(root_files)),
+            --root_markers     = util.root_pattern(table.unpack(root_files)),
             capabilities = capabilities,
             settings     = {
                 Lua = {

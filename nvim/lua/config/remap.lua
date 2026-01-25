@@ -42,9 +42,9 @@ vim.keymap.set("n", "<leader>f", function()
     local bufnr = vim.api.nvim_get_current_buf()
     local available = conform.list_formatters(bufnr)
     if #available > 0 then
-        conform.format({async = true})
+        conform.format({ async = true })
     else
-        vim.lsp.buf.format({async=true})
+        vim.lsp.buf.format({ async = true })
     end
 end
 )
@@ -61,7 +61,7 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 vim.keymap.set("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
 -- Make the current file executable
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", {silent = true})
+vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- Remove windows style carriage returns (^M)
 vim.keymap.set("n", "<leader>rm", ":%s/\\r//g<CR>", {
@@ -77,6 +77,24 @@ vim.keymap.set({ "n", "i", "v" }, "<Up>", "<NOP>", opts)
 vim.keymap.set({ "n", "i", "v" }, "<Down>", "<NOP>", opts)
 vim.keymap.set({ "n", "i", "v" }, "<Left>", "<NOP>", opts)
 vim.keymap.set({ "n", "i", "v" }, "<Right>", "<NOP>", opts)
+
+-- Open a terminal
+vim.keymap.set("n", "<leader>ft", function()
+    local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+    local target_dir = (vim.v.shell_error == 0 and git_root ~= "") and git_root or vim.fn.getcwd()
+    vim.cmd("terminal")
+    vim.cmd("startinsert")
+    vim.fn.chansend(vim.b.terminal_job_id, "cd " .. vim.fn.shellescape(target_dir) .. "\n")
+end, { desc = "Terminal (project root)" })
+vim.keymap.set("n", "<leader>fT", ":terminal<CR>", { desc = "Terminal (current buffer)" })
+
+-- Execute shell commands
+vim.keymap.set("n", "<leader>sh", function()
+    local cmd = vim.fn.input("Command: ")
+    if cmd ~= "" then
+        vim.fn.system(cmd)
+    end
+end, { desc = "Execute shell command" })
 
 --[[
 --
