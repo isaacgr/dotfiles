@@ -71,6 +71,16 @@ vim.keymap.set("n", "<leader>rm", ":%s/\\r//g<CR>", {
 -- Pretty print JSON file in current buffer using python
 vim.keymap.set("n", "<leader>J", ":%!python3 -m json.tool<CR>")
 
+-- Recursive grep for exact word under cursor (wrapped in \< \>)
+vim.keymap.set('n', '<C-g>',
+    [[:grep! -rn --exclude-dir=site-packages --exclude-dir=build --exclude=pylint.txt --exclude-dir=.mypy_cache --exclude-dir=.git --exclude-dir=node_modules '\<<C-r><C-w>\>' .<CR>:copen<CR>]],
+    { desc = "Grep exact word under cursor" })
+
+-- Recursive grep for partial symbol under cursor
+vim.keymap.set('n', '<C-h>',
+    [[:grep! -rn --exclude-dir=site-packages --exclude-dir=build --exclude=pylint.txt --exclude-dir=.mypy_cache --exclude-dir=.git --exclude-dir=node_modules  '<C-r><C-w>' .<CR>:copen<CR>]],
+    { desc = "Grep symbol under cursor" })
+
 -- Disable arrow keys in normal, insert, and visual modes
 local opts = { noremap = true, silent = true }
 vim.keymap.set({ "n", "i", "v" }, "<Up>", "<NOP>", opts)
