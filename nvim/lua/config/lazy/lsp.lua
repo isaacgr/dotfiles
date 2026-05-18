@@ -40,6 +40,7 @@ return {
                 css = { 'prettier' },
                 scss = { 'prettier' },
                 json = { 'prettier' },
+                graphql = { 'prettier_graphql' },
                 cpp = { "clang-format" },
                 c = { "clang-format" },
             },
@@ -50,6 +51,15 @@ return {
                         '--print-width', '80',
                         '--singleAttributePerLine', 'true'
                     }
+                },
+                prettier_graphql = {
+                    command = 'prettier',
+                    args = {
+                        '--stdin-filepath',
+                        '$FILENAME',
+                        '--parser',
+                        'graphql',
+                    },
                 },
                 clang_format = {
                     prepend_args = { "-style=file" }
@@ -81,7 +91,8 @@ return {
                 'clangd',
                 'html',
                 'cssls',
-                'tailwindcss'
+                'tailwindcss',
+                'graphql'
             },
             automatic_installation = true,
         })
@@ -165,6 +176,12 @@ return {
             end,
         }
         vim.lsp.enable("html")
+
+        vim.lsp.config.graphql = {
+            capabilities = capabilities,
+        }
+
+        vim.lsp.enable('graphql')
 
         -- 6. Completion configuration
         cmp.setup({
