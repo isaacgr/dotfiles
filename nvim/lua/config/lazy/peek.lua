@@ -1,6 +1,9 @@
 return {
     {
         "toppair/peek.nvim",
+        cond = function()
+            return vim.fn.executable('deno') == 1
+        end,
         event = { "VeryLazy" },
         build = "deno task --quiet build:fast",
         config = function()

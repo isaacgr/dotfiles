@@ -1,5 +1,8 @@
 return {
     "tpope/vim-fugitive",
+    cond = function()
+        return vim.fn.executable('git') == 1
+    end,
     config = function()
         vim.keymap.set("n", "<leader>gs", vim.cmd.Git, { desc = "Git status (fugitive)" })
         local autocmd = vim.api.nvim_create_autocmd

@@ -82,18 +82,26 @@ return {
         capabilities.textDocument.completion.completionItem.snippetSupport = true
 
         require('mason').setup()
+
+        -- Build server list conditionally based on available tools
+        local servers = { 'lua_ls', 'html', 'cssls', 'tailwindcss' }
+
+        if vim.fn.executable('go') == 1 then
+            table.insert(servers, 'gopls')
+        end
+        if vim.fn.executable('node') == 1 then
+            table.insert(servers, 'ts_ls')
+            table.insert(servers, 'graphql')
+        end
+        if vim.fn.executable('python3') == 1 or vim.fn.executable('python') == 1 then
+            table.insert(servers, 'pyright')
+        end
+        if vim.fn.executable('clang') == 1 or vim.fn.executable('gcc') == 1 then
+            table.insert(servers, 'clangd')
+        end
+
         require('mason-lspconfig').setup({
-            ensure_installed = {
-                'lua_ls',
-                'gopls',
-                'ts_ls',
-                'pyright',
-                'clangd',
-                'html',
-                'cssls',
-                'tailwindcss',
-                'graphql'
-            },
+            ensure_installed = servers,
             automatic_installation = true,
         })
 
