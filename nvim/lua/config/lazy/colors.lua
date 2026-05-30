@@ -1,4 +1,5 @@
 function ColorMyPencils(color)
+    --color = color or "rose-pine-moon"
     color = color or "tokyonight"
     vim.cmd.colorscheme(color)
 
@@ -83,6 +84,7 @@ return {
             require('onedark').load()
         end
     },
+    { 'ikelaiah/nebula-drift-omega' },
     {
         'sainnhe/everforest',
         config = function()
@@ -98,5 +100,18 @@ return {
         "rockyzhang24/arctic.nvim",
         branch = "v2",
         dependencies = { "rktjmp/lush.nvim" }
-    }
+    },
+    {
+        "idr4n/andromeda.nvim",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            vim.cmd("colorscheme andromeda")
+        end,
+    },
+    {
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
+    },
 }
