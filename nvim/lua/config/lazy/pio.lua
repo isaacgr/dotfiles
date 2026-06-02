@@ -8,4 +8,5 @@ return {
         { "nvim-telescope/telescope.nvim" },
         { "nvim-lua/plenary.nvim" },
     },
+    ft = { "c", "cpp" },
 }

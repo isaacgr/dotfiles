@@ -16,6 +16,7 @@ local root_files = {
 
 return {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
         -- Formatter integration
         "stevearc/conform.nvim",

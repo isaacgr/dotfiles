@@ -28,6 +28,10 @@ local headers = {
 return {
     {
         'goolord/alpha-nvim',
+        event = "VimEnter",
+        cond = function()
+            return vim.fn.argc() == 0 and vim.bo.filetype ~= "netrw"
+        end,
         config = function()
             -- require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
             -- Make sure alpha-nvim is installed via lazy.nvim or another plugin manager

@@ -2,7 +2,8 @@ return {
     {
 
         'nvim-lualine/lualine.nvim',
-        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        event = "VeryLazy",
+        dependencies = { 'nvim-tree/nvim-web-devicons', 'arkav/lualine-lsp-progress' },
         config = function()
             require('lualine').setup({
                 options = {
@@ -21,7 +22,4 @@ return {
             })
         end
     },
-    {
-        'arkav/lualine-lsp-progress'
-    }
 }
