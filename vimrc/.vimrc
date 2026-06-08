@@ -54,7 +54,8 @@ set wildmenu
 set wildmode=longest:full,full
 
 set backspace=indent,eol,start
-set mouse=
+set mouse=a
+set clipboard^=unnamed,unnamedplus
 set updatetime=50
 
 set splitright
