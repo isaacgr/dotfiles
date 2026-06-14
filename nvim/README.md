@@ -1,6 +1,6 @@
 # Neovim Configuration
 
-A modular Neovim configuration using [lazy.nvim](https://github.com/folke/lazy.nvim) for plugin management.
+A modular Neovim configuration using Neovim's native `vim.pack` package manager (introduced in Neovim v0.12).
 
 ## Structure
 
@@ -8,11 +8,10 @@ A modular Neovim configuration using [lazy.nvim](https://github.com/folke/lazy.n
 nvim/
 ├── init.lua                 # Entry point, loads config module
 ├── lua/config/
-│   ├── init.lua             # Main config loader
+│   ├── init.lua             # Main config loader, registers plugins via vim.pack
 │   ├── set.lua              # Core Vim options
 │   ├── remap.lua            # Key mappings
-│   ├── lazy_init.lua        # lazy.nvim bootstrap
-│   └── lazy/                # Plugin specs (auto-loaded)
+│   └── plugins/             # Plugin specs (migrated to vim.pack format)
 ```
 
 ## Core Settings (`set.lua`)
@@ -234,6 +233,13 @@ Transparent background applied via `ColorMyPencils()` function.
    git clone <repo> ~/.config/nvim
    ```
 
-2. Start Neovim — lazy.nvim will bootstrap and install plugins automatically.
+2. Start Neovim — `vim.pack.add` will automatically clone and install any missing plugins in the background during startup.
 
 3. Run `:Mason` to verify LSP servers are installed.
+
+## Package Management (vim.pack)
+
+This configuration manages packages natively using `vim.pack` rather than a third-party plugin manager:
+* **Update all plugins**: Run `:lua vim.pack.update()` (it will download updates and open a confirmation buffer).
+* **Verify plugin status**: Run `:lua print(vim.inspect(vim.pack.get()))` to view a list of all plugins and their active states.
+* **Remove a plugin**: Run `:lua vim.pack.del({ 'plugin-name' })`.
