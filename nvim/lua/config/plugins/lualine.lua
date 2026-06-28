@@ -1,10 +1,8 @@
 return {
-    {
-
-        'nvim-lualine/lualine.nvim',
-        event = "VeryLazy",
-        dependencies = { 'nvim-tree/nvim-web-devicons', 'arkav/lualine-lsp-progress' },
-        config = function()
+    src = 'https://github.com/nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons', 'arkav/lualine-lsp-progress' },
+    data = {
+        setup = function()
             require('lualine').setup({
                 options = {
                     theme = 'auto',
@@ -21,5 +19,5 @@ return {
                 },
             })
         end
-    },
+    }
 }

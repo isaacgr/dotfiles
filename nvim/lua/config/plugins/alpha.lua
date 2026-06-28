@@ -25,31 +25,27 @@ local headers = {
         "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠚⠛⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀",
     },
 }
+
+-- Only load if the I 'vim' without any additional args
 return {
-    {
-        'goolord/alpha-nvim',
-        event = "VimEnter",
-        cond = function()
-            return vim.fn.argc() == 0 and vim.bo.filetype ~= "netrw"
-        end,
-        config = function()
-            -- require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
-            -- Make sure alpha-nvim is installed via lazy.nvim or another plugin manager
+    src = 'https://github.com/goolord/alpha-nvim',
+    data = {
+        setup = function()
             local alpha = require("alpha")
             local dashboard = require("alpha.themes.dashboard")
+
             dashboard.section.header.val = headers["tree1"]
             dashboard.section.buttons.val = {
                 dashboard.button("f", ".  Find file", ":Telescope find_files<CR>"),
                 dashboard.button("r", ".  Recent files", ":Telescope oldfiles<CR>"),
                 dashboard.button("n", ".  New file", ":ene <BAR> startinsert <CR>"),
                 dashboard.button("c", ".  Config", ":e $MYVIMRC<CR>"),
-                dashboard.button("h", ".  Help", ":help"),
+                dashboard.button("h", ".  Help", ":help<CR>"),
                 dashboard.button("q", ".  Quit", ":qa<CR>"),
             }
 
             dashboard.section.footer.val = "> wanting it to be easy "
 
-            -- Optional styling
             dashboard.section.header.opts.hl = "Constant"
             dashboard.section.buttons.opts.hl = "Function"
             dashboard.section.footer.opts.hl = "Type"

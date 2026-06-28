@@ -43,14 +43,16 @@ vim.api.nvim_create_autocmd("WinLeave", {
     end,
 })
 
+-- dependency: nvim-tree/nvim-web-devicons
 return {
-    "akinsho/bufferline.nvim",
-    version = "*",
-    event = { "BufReadPost", "BufNewFile" },
-    dependencies = "nvim-tree/nvim-web-devicons",
-    opts = {
-        options = {
-            separator_style = "slant",
-        },
+    src = "https://github.com/akinsho/bufferline.nvim",
+    data = {
+        setup = function()
+            require('bufferline').setup({
+                options = {
+                    separator_style = "slant",
+                },
+            })
+        end,
     },
 }
